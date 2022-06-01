@@ -78,4 +78,4 @@ class CryptoPricer(discord.Client):
         self.loop.create_task(self.timed_updates())
 
 client = CryptoPricer()
-client.run(os.getenviron("TOKEN"))
+client.run(os.getenv("TOKEN"))
