@@ -27,8 +27,8 @@ class CoinGecko:
     def is_limited(self):
         hits, htime = self.hits
         if hits >= 50 and (time.time() <= htime + 60):
-            return False
-        return True
+            return True
+        return False
 
     def _ping(self):
         path = '/ping'
@@ -67,7 +67,7 @@ class CryptoPricer(discord.Client):
 
     async def _refresh(self):
         refresh = self.api._price('bitcoin', 'usd')
-        await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"${refresh}"))
+        await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{refresh}"))
 
     async def on_message(self, message):
         if message.author == self.user:
