@@ -70,7 +70,7 @@ class CryptoPricer(discord.Client):
             return
         msg = message.content
         if msg.startswith('~'):
-            getattr(self, message.replace('~', '_'))()
+            await getattr(self, msg.replace('~', '_'))(message)
 
     async def on_ready(self):
         print(f"Logged in as: {self.user.name}({self.user.id})")
@@ -78,4 +78,4 @@ class CryptoPricer(discord.Client):
         self.loop.create_task(self.timed_updates())
 
 client = CryptoPricer()
-client.run(os.getenv("TOKEN"))
+client.run(os.getenviron("TOKEN"))
