@@ -24,7 +24,7 @@ class CoinGecko:
 
     def is_limited(self):
         hits, htime = self.hits
-        if hits => 50 and (time.time() <= htime + 60):
+        if hits >= 50 and (time.time() <= htime + 60):
             return False
         return True
 
