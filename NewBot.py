@@ -32,7 +32,7 @@ class CoinGecko:
         path = '/ping'
         url = urljoin(self.api + path.lstrip('/'))
         response = self.get(url)
-        print(r.status)
+        return r.status
 
     def _price(self, coin, currency):
         path = '/price'
@@ -73,7 +73,7 @@ class CryptoPricer(discord.Client):
 
     async def on_ready(self):
         print(f"Logged in as: {self.user.name}({self.user.id})")
-        print(f"Bot API Status: {self.api.ping}")
+        print(f"Bot API Status: {self.api._ping()}")
 
 client = CryptoPricer()
 client.run(os.getenv("TOKEN"))
