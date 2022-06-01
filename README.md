@@ -7,4 +7,4 @@ Discord Bot to show price of bitcoin.
 `!refresh` to refresh the status of discord bot to latest price.
 
 ### To Do
-- [ ] Update bot status automatically to latest price.
+- [x] Update bot status automatically to latest price.
