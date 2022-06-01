@@ -64,7 +64,8 @@ class CryptoPricer(discord.Client):
 
     async def _refresh(self):
         refresh = self.api._price('bitcoin', 'usd')
-        await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{refresh}"))
+        print(refresh)
+        await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=refresh))
 
     async def on_message(self, message):
         if message.author == self.user:
