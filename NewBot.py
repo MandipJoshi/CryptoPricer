@@ -54,7 +54,22 @@ class CryptoPricer(discord.Client):
         self.api = CoinGecko()
 
     async def timed_updates(self):
-        await self._refresh()
+        #await self._refresh()
+        profit_to_cover = 1.5
+        current_money = 18.108
+        channel = await self.fetch_channel('981616756407799808')
+        baseline_price = 1.002
+        price = self.api._price('busd', 'usd')
+        if price > baseline_price:
+            increase = ((price - baseline_price)/(baseline_price))
+            increase_percent = increase * 100
+            await channel.send(f"BUSD Price increased by: {round(increase_percent, 2)}%. Original Price: {baseline_price}, Current Price: {price}")
+            await channel.send(f"Current BUSD: {current_money}, BUSD after exchange: {round(current_money + increase * current_money, 2)}")
+        elif price < baseline_price:
+            decrease = ((baseline_price - price)/(baseline_price))
+            decrease_percent = decrease * 100
+            await channel.send(f"BUSD Price decreased by: {round(decrease_percent, 2)}%. Original Price: {baseline_price}, Current Price: {price}")
+            await channel.send(f"Current BUSD: {current_money}, BUSD after exchange: {round(current_money - decrease * current_money, 2)}")
         await asyncio.sleep(300)
 
     async def _price(self, message):
