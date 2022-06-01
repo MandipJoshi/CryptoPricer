@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import discord
+import asyncio
 from urllib.parse import urljoin
 
 class CoinGecko:
@@ -36,14 +37,19 @@ class CoinGecko:
 class CryptoPricer(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.loop.create_task(self.timed_updates())
         self.api = CoinGecko()
 
-    async def price(self, message):
+    async def timed_updates():
+        self._refresh()
+        await asyncio.sleep(300)
+
+    async def _price(self, message):
         price = self.api._price('bitcoin', 'usd')
         await message.channel.send(f"**Bitcoin Price**: ${price}")
 
-    async def refresh(self):
-        refresh = get_price()
+    async def _refresh(self):
+        refresh = self.api._price('bitcoin', 'usd')
         await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"${refresh}"))
 
     async def on_message(self, message):
@@ -51,7 +57,7 @@ class CryptoPricer(discord.Client):
             return
         msg = message.content
         if message.startswith('~'):
-            getattr(self, message[1:])()
+            getattr(self, message.replace('~', '_'))()
 
     async def on_ready(self):
         print(f"Logged in as: {self.user.name}({self.user.id})")
