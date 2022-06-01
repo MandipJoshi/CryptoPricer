@@ -13,7 +13,7 @@ class CoinGecko:
         self.rate_limit = 50
         self.rate_limit_reset = 60
         self.hits = [0, time.time()]
-        self.api = "https://api.coingecko.com/api/v3/simple/"
+        self.api = "https://api.coingecko.com/api/v3/"
 
     def get(self, url, parameters=None):
         if self.is_limited():
@@ -33,7 +33,6 @@ class CoinGecko:
     def _ping(self):
         path = '/ping'
         url = urljoin(self.api, path.lstrip('/'))
-        print(url)
         response = self.get(url)
         return response.status_code
 
