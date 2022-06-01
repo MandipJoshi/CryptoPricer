@@ -33,6 +33,7 @@ class CoinGecko:
     def _ping(self):
         path = '/ping'
         url = urljoin(self.api, path.lstrip('/'))
+        print(url)
         response = self.get(url)
         return response.status_code
 
