@@ -37,7 +37,7 @@ class CoinGecko:
         return response.status_code
 
     def _price(self, coin, currency):
-        path = '/price'
+        path = '/simple/price'
         url = urljoin(self.api, path.lstrip('/'))
         query = {
             'ids' : coin,
