@@ -2,9 +2,9 @@
 import os
 import discord
 import asyncio
+import time
 
 from requests import get
-from time import time
 from urllib.parse import urljoin
 
 class CoinGecko:
