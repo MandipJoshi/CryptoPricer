@@ -18,10 +18,11 @@ class CoinGecko:
     def get(self, url, parameters=None):
         if self.is_limited():
             print("Failed to call API.. Rate limit exceeded")
-        r = get(url, params=parameters)
+        response = get(url, params=parameters)
         self.hits[0] = self.hits[0] + 1
         if self.hits[1] > 60:
             self.hits[1] = time.time()
+        return response
 
     def is_limited(self):
         hits, htime = self.hits
@@ -33,7 +34,7 @@ class CoinGecko:
         path = '/ping'
         url = urljoin(self.api, path.lstrip('/'))
         response = self.get(url)
-        return r.status_code
+        return response.status_code
 
     def _price(self, coin, currency):
         path = '/price'
