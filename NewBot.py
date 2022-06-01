@@ -45,7 +45,7 @@ class CoinGecko:
         }
         response = self.get(url, parameters=query)
         json_data = json.loads(response.text)
-        price = json_data['bitcoin']['usd']
+        price = json_data[coin]['usd']
         return price
 
 class CryptoPricer(discord.Client):
@@ -58,8 +58,13 @@ class CryptoPricer(discord.Client):
         await asyncio.sleep(300)
 
     async def _price(self, message):
-        price = self.api._price('bitcoin', 'usd')
-        await message.channel.send(f"**Bitcoin Price**: ${price}")
+        if not ' ' in message.content:
+            await message.channel.send(f"Enter the coin the you want the price of!")
+            return
+        else:
+            coin = message.content.split(' ')[-1]
+        price = self.api._price(coin, 'usd')
+        await message.channel.send(f"**{coin.capitalize()} Price**: ${price}")
 
     async def _refresh(self):
         refresh = self.api._price('bitcoin', 'usd')
@@ -70,7 +75,8 @@ class CryptoPricer(discord.Client):
             return
         msg = message.content
         if msg.startswith('~'):
-            await getattr(self, msg.replace('~', '_'))(message)
+            command = msg.split(' ')[0].replace('~', '_') if ' ' in msg else msg.replace('~', '_')
+            await getattr(self, command)(message)
 
     async def on_ready(self):
         print(f"Logged in as: {self.user.name}({self.user.id})")
