@@ -46,6 +46,9 @@ class CoinGecko:
         response = self.get(url, parameters=query)
         json_data = json.loads(response.text)
         price = json_data['bitcoin']['usd']
+        print(response.text)
+        print(json_data)
+        print(price)
         return price
 
 class CryptoPricer(discord.Client):
