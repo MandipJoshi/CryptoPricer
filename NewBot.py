@@ -30,13 +30,13 @@ class CoinGecko:
 
     def _ping(self):
         path = '/ping'
-        url = urljoin(self.api + path.lstrip('/'))
+        url = urljoin(self.api, path.lstrip('/'))
         response = self.get(url)
         return r.status_code
 
     def _price(self, coin, currency):
         path = '/price'
-        url = urljoin(self.api + path.lstrip('/'))
+        url = urljoin(self.api, path.lstrip('/'))
         query = {
             'ids' : coin,
             'vs_currencies': currency
