@@ -63,7 +63,6 @@ class CryptoPricer(discord.Client):
 
     async def _refresh(self):
         refresh = self.api._price('bitcoin', 'usd')
-        print(f"DEBUGGING: {refresh}")
         await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=refresh))
 
     async def on_message(self, message):
