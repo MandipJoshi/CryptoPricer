@@ -32,7 +32,7 @@ class CoinGecko:
         path = '/ping'
         url = urljoin(self.api + path.lstrip('/'))
         response = self.get(url)
-        return r.status
+        return r.status_code
 
     def _price(self, coin, currency):
         path = '/price'
