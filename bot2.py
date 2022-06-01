@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import os
 import discord
 import asyncio
 
@@ -73,3 +74,4 @@ class CryptoPricer(discord.Client):
         print(f"Bot API Status: {self.api.ping}")
 
 client = CryptoPricer()
+client.run(os.getenv("TOKEN"))
