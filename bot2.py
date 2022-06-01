@@ -11,16 +11,20 @@ class CryptoPricer(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    async def price(self, message):
+        price = get_price()
+        await message.channel.send(f"**Bitcoin Price**: ${price}")
+
+    async def refresh(self):
+        refresh = get_price()
+        await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"${refresh}"))
+
     async def on_message(self, message):
         if message.author == self.user:
             return
         msg = message.content
-        if msg.startswith("!price"):
-            price = get_price()
-            await message.channel.send(f"**Bitcoin Price**: ${price}")
-        if msg.startswith("!refresh"):
-            refresh = get_price()
-            await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"${refresh}"))
+        if message.startswith('~'):
+            getattr(self, message[1:])()
 
     async def on_ready(self):
         print(f'{self.color.good} Logged in as: {self.user.name}({self.user.id})')
