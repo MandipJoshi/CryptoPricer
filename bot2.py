@@ -1,25 +1,34 @@
 #!/usr/bin/python
 import discord
 import asyncio
+
+from requests import get
+from time import time
 from urllib.parse import urljoin
 
 class CoinGecko:
     def __init__(self):
         self.rate_limit = 50
         self.rate_limit_reset = 60
-        self.hits = (0, 0.0)
+        self.hits = (0, time.time())
         self.api = "https://api.coingecko.com/api/v3/simple/"
 
+    def get(self, url, parameters=None):
+        if self.is_limited():
+            print("Failed to call API.. Rate limit exceeded")
+        r = get(url, params=parameters)
+        self.hits[0] = self.hits[0] + 1
+
     def is_limited(self):
-        hits, time = self.hits
-        if hits => 50 and int(time) <= 60:
+        hits, htime = self.hits
+        if hits => 50 and (time.time() <= htime + 60):
             return False
         return True
 
     def _ping(self):
         path = '/ping'
         url = urljoin(self.api + path.lstrip('/'))
-        response = requests.get(url)
+        response = self.get(url)
         print(r.status)
 
     def _price(self, coin, currency):
@@ -29,7 +38,7 @@ class CoinGecko:
             'ids' : coin,
             'vs_currencies': currency
         }
-        response = requests.get(url, params=query)
+        response = self.get(url, parameters=query)
         json_data = json.loads(response.text)
         price = json_data['bitcoin']['usd']
         return price
