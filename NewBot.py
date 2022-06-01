@@ -64,14 +64,14 @@ class CryptoPricer(discord.Client):
 
     async def _refresh(self):
         refresh = self.api._price('bitcoin', 'usd')
-        print(refresh)
+        print(f"DEBUGGING: {refresh}")
         await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=refresh))
 
     async def on_message(self, message):
         if message.author == self.user:
             return
         msg = message.content
-        if message.startswith('~'):
+        if msg.startswith('~'):
             getattr(self, message.replace('~', '_'))()
 
     async def on_ready(self):
