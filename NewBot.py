@@ -3,6 +3,7 @@ import os
 import discord
 import asyncio
 import time
+import json
 
 from requests import get
 from urllib.parse import urljoin
