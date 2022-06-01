@@ -52,7 +52,7 @@ class CryptoPricer(discord.Client):
         self.loop.create_task(self.timed_updates())
         self.api = CoinGecko()
 
-    async def timed_updates():
+    async def timed_updates(self):
         self._refresh()
         await asyncio.sleep(300)
 
