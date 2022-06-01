@@ -9,7 +9,7 @@ def get_price():
     json_data = json.loads(response.text)
     price = json_data['bitcoin']['usd']
     return (price)
-status = get_price()       
+status = get_price()
 @client.event
 async def on_ready():
     print("We have logged in as {0.user}".format(client))
@@ -22,7 +22,7 @@ async def on_message(message):
     msg = message.content
     if msg.startswith("!price"):
         price = get_price()
-        await message.channel.send(f"**Bitcoin Price**: ${price}")  
+        await message.channel.send(f"**Bitcoin Price**: ${price}")
     if msg.startswith("!refresh"):
         refresh = get_price()
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"${refresh}"))
