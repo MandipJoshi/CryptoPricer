@@ -11,7 +11,7 @@ class CoinGecko:
     def __init__(self):
         self.rate_limit = 50
         self.rate_limit_reset = 60
-        self.hits = (0, time.time())
+        self.hits = [0, time.time()]
         self.api = "https://api.coingecko.com/api/v3/simple/"
 
     def get(self, url, parameters=None):
