@@ -19,6 +19,8 @@ class CoinGecko:
             print("Failed to call API.. Rate limit exceeded")
         r = get(url, params=parameters)
         self.hits[0] = self.hits[0] + 1
+        if self.hits[1] > 60:
+            self.hits[1] = time.time()
 
     def is_limited(self):
         hits, htime = self.hits
