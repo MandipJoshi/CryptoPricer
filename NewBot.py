@@ -52,6 +52,7 @@ class CryptoPricer(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.api = CoinGecko()
+        self.loop.create_task(self.timed_updates())
 
     async def timed_updates(self):
         #await self._refresh()
@@ -100,7 +101,6 @@ class CryptoPricer(discord.Client):
     async def on_ready(self):
         print(f"Logged in as: {self.user.name}({self.user.id})")
         print(f"Bot API Status: {self.api._ping()}")
-        self.loop.create_task(self.timed_updates())
 
 client = CryptoPricer()
 client.run(os.getenv("TOKEN"))
