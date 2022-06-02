@@ -78,7 +78,7 @@ class CryptoPricer(discord.Client):
 
     async def _price(self, message):
         if not ' ' in message.content:
-            await message.channel.send(f"Enter the coin the you want the price of!")
+            await message.channel.send(f"Enter the name of coin that you want price of!")
             return
         else:
             coin = message.content.split(' ')[-1]
