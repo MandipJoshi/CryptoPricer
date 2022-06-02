@@ -63,13 +63,17 @@ class CryptoPricer(discord.Client):
         if price > baseline_price:
             increase = ((price - baseline_price)/(baseline_price))
             increase_percent = increase * 100
-            await channel.send(f"BUSD Price increased by: {round(increase_percent, 2)}%. Original Price: {baseline_price}, Current Price: {price}")
-            await channel.send(f"Current BUSD: {current_money}, BUSD after exchange: {round(current_money + increase * current_money, 2)}")
+            await channel.send(f"BUSD Price increased by: {round(increase_percent, 2)}%. Original Price: {baseline_price}, Current Price: {round(price,2)}$")
+            exchange = round(current_money + increase * current_money, 3)
+            if exchange > current_money:
+                await channel.send(f"Exchanging now will result in {increase_percent} profit <@616882880643334146>")
+            await channel.send(f"Current BUSD: {current_money}, BUSD after exchange: {exchange}")
         elif price < baseline_price:
             decrease = ((baseline_price - price)/(baseline_price))
             decrease_percent = decrease * 100
-            await channel.send(f"BUSD Price decreased by: {round(decrease_percent, 2)}%. Original Price: {baseline_price}, Current Price: {price}")
-            await channel.send(f"Current BUSD: {current_money}, BUSD after exchange: {round(current_money - decrease * current_money, 2)}")
+            await channel.send(f"BUSD Price decreased by: {round(decrease_percent, 2)}%. Original Price: {baseline_price}, Current Price: {round(price, 2)}$")
+            exchange = round(current_money - decrease * current_money, 3)
+            await channel.send(f"Current BUSD: {current_money}, BUSD after exchange: {exchange}")
         await asyncio.sleep(300)
 
     async def _price(self, message):
